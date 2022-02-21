@@ -12,6 +12,16 @@ function hashPassword (password) {
 }
 
 module.exports = {
+    tampil: (req,res) => {
+        const sql = `SELECT * FROM pengguna`
+        db.query(sql, (err, result) =>{
+            if(err) throw err
+            res.json({
+                message: "Berhasil",
+                data: result
+            })
+        })
+    },
     registrasi: (req,res) => {
         
         const nama = req.body.nama
@@ -53,7 +63,7 @@ module.exports = {
                 if(typeof user === 'undefined') return res.status(401).json({message : 'user tidak ditemukan'})
                 if(!bcrypt.compareSync(password, user.password)) return res.status(401).json({message : 'email atau password tidak sesuai'})
                 
-                const token = jwt.sign({data : user}, secret)
+                const token = jwt.sign({data : user}, secret) //ini mendaptkan token untuk autentifikasi dpt dari jwt user. Habis itu dimasukkan kalau setiap user dpt token secara secret
                 return res.json({message : 'Login berhasi, silahkan mengisi token dibawah ini untuk mengakses endpoint private lain', token})
             }) 
         }
