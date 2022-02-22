@@ -1,4 +1,4 @@
-const {verify} = require('jsonwebtoken')
+const {verify, decode} = require('jsonwebtoken')
 const secret = '#$@^%#^@%#$%&^' //disini secretnya harus sama dengan yang di authroization nya (modul export login)
 
 module.exports={
@@ -15,6 +15,9 @@ module.exports={
                         message: "login first",
                         err
                     })
+                }else{
+                    let user = decoded.result
+                    next()
                 }
             })
         }else{

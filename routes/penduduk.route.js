@@ -7,9 +7,11 @@ const router =  new express.Router();
 
 
 router.get("/tampil",checkToken, pendudukController.tampil)
-router.post("/tambah", pendudukController.tambah)
+router.post("/tambah", checkToken, pendudukController.tambah)
 router.put("/update/:id",pendudukController.update)
 router.delete("/hapus/:id", pendudukController.delete)
+router.post("/registrasi", pendudukController.registrasi)
+router.get("/login", pendudukController.login)
 
 
 

@@ -28,7 +28,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/penduduk", require('./routes/penduduk.route'))
-app.use("/masuk", require('./routes/authorization.route'))
 
 const port = 2000;
 app.listen(port, () => {
