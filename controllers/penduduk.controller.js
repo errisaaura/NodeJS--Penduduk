@@ -121,15 +121,21 @@ module.exports = {
             return db.query (`SELECT * FROM pengguna WHERE email = ? `, email, (err, result ) => {
                 if(err) return res.status(500).json({err})
 
-                const user = result[0]
+                const user = result[0] //mengambil data indeks ke 0
                 if(typeof user === 'undefined') return res.status(401).json({message : 'user tidak ditemukan'})
+
                 if(!bcrypt.compareSync(password, user.password)) return res.status(401).json({message : 'email atau password tidak sesuai'})
                 
-                const token = jwt.sign({data : user}, secret) //ini mendaptkan token untuk autentifikasi dpt dari jwt user. Habis itu dimasukkan kalau setiap user dpt token secara secret
+
+                //ini mendaptkan token untuk autentifikasi dpt dari jwt user. Habis itu dimasukkan kalau setiap user dpt token secara secret
+                //ex = expired
+                const token = jwt.sign({data : user}, secret) 
                 return res.json({message : 'Login berhasi, silahkan mengisi token dibawah ini untuk mengakses endpoint private lain', token})
             }) 
         }
     }
+
+
 
 
     
